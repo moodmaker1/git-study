@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>깃허브 작업 과정 완벽 가이드</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            color: white;
+            font-size: 2.8em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #f0f0f0;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+        }
+        
+        .workflow-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+        
+        .step {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 6px solid #e74c3c;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        
+        .step:hover {
+            transform: translateX(10px);
+        }
+        
+        .step-number {
+            position: absolute;
+            left: -15px;
+            top: -15px;
+            background: #e74c3c;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        .step-title {
+            font-size: 1.6em;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            margin-left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .step-content {
+            color: #34495e;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        
+        .what-is {
+            background: #fff3cd;
+            padding: 12px;
+            border-radius: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .command {
+            background: #2c3e50;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            position: relative;
+            overflow-x: auto;
+        }
+        
+        .command::before {
+            content: "💻 터미널";
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            background: #34495e;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            color: white;
+        }
+        
+        .tip {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #e17055;
+        }
+        
+        .important {
+            background: linear-gradient(135deg, #fd79a8 0%, #fdcb6e 100%);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+        
+        .arrow {
+            text-align: center;
+            font-size: 2em;
+            color: #e74c3c;
+            margin: 10px 0;
+        }
+        
+        .summary {
+            background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .emoji {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 깃허브 작업 과정 완벽 가이드 🚀</h1>
+            <div class="subtitle">처음부터 끝까지 단계별로 따라하기!</div>
+        </header>
+        
+        <div class="workflow-container">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-title">
+                    <span class="emoji">🌐</span>
+                    깃허브에서 리포지토리 만들기
+                </div>
+                <div class="step-content">
+                    <div class="what-is">
+                        <strong>📝 뭐하는 단계인가요?</strong><br>
+                        온라인에 내 프로젝트를 담을 빈 폴더를 만드는 거예요!
+                    </div>
+                    
+                    <strong>🔧 하는 방법:</strong><br>
+                    1. GitHub.com에 로그인<br>
+                    2. 오른쪽 위 "+" 버튼 클릭<br>
+                    3. "New repository" 선택<br>
+                    4. 프로젝트 이름 입력<br>
+                    5. "Create repository" 클릭<br>
+                    
+                    <div class="tip">
+                        💡 <strong>꿀팁:</strong> 프로젝트 이름은 영어로, 띄어쓰기 대신 하이픈(-)을 사용하세요!
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow">⬇️</div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-title">
+                    <span class="emoji">📁</span>
+                    로컬(내 컴퓨터)에 폴더 만들기
+                </div>
+                <div class="step-content">
+                    <div class="what-is">
+                        <strong>📝 뭐하는 단계인가요?</strong><br>
+                        내 컴퓨터에 실제로 작업할 폴더를 만드는 거예요!
+                    </div>
+                    
+                    <strong>🔧 하는 방법:</strong><br>
+                    1. 바탕화면이나 원하는 위치에서 우클릭<br>
+                    2. "새 폴더" 선택<br>
+                    3. 깃허브 프로젝트와 같은 이름으로 폴더명 입력<br>
+                    
+                    <div class="tip">
+                        💡 <strong>꿀팁:</strong> 폴더 이름도 깃허브와 똑같이 만들면 헷갈리지 않아요!
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow">⬇️</div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-title">
+                    <span class="emoji">💻</span>
+                    VS Code로 폴더 열고 터미널 사용
+                </div>
+                <div class="step-content">
+                    <div class="what-is">
+                        <strong>📝 뭐하는 단계인가요?</strong><br>
+                        만든 폴더를 코딩 프로그램으로 열고, 명령어를 입력할 창을 여는 거예요!
+                    </div>
+                    
+                    <strong>🔧 하는 방법:</strong><br>
+                    1. VS Code 실행<br>
+                    2. "File" → "Open Folder" → 만든 폴더 선택<br>
+                    3. 상단 메뉴에서 "Terminal" → "New Terminal" 클릭<br>
+                    
+                    <div class="important">
+                        🎯 이제 깃허브와 내 컴퓨터를 연결할 준비가 됐어요!
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow">⬇️</div>
+            
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-title">
+                    <span class="emoji">🔗</span>
+                    깃허브 명령어 복사해서 터미널에 입력
+                </div>
+                <div class="step-content">
+                    <div class="what-is">
+                        <strong>📝 뭐하는 단계인가요?</strong><br>
+                        깃허브에서 제공하는 연결 명령어를 복사해서 붙여넣는 거예요!<br>
+                        이렇게 하면 README.md 파일이 내 폴더에 생겨요!
+                    </div>
+                    
+                    <strong>🔧 하는 방법:</strong><br>
+                    1. 깃허브 리포지토리 페이지로 가기<br>
+                    2. 초록색 "Code" 버튼 클릭<br>
+                    3. "...or create a new repository on the command line" 부분 복사<br>
+                    4. VS Code 터미널에 붙여넣기 후 Enter<br>
+                    
+                    <div class="command">
+git init<br>
+git add README.md<br>
+git commit -m "first commit"<br>
+git branch -M main<br>
+git remote add origin https://github.com/사용자명/프로젝트명.git<br>
+git push -u origin main
+                    </div>
+                    
+                    <div class="tip">
+                        💡 <strong>README.md가 뭔가요?</strong><br>
+                        프로젝트를 설명하는 파일이에요! 마크다운 형식으로 쓰여져 있어요.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow">⬇️</div>
+            
+            <div class="step">
+                <div class="step-number">5</div>
+                <div class="step-title">
+                    <span class="emoji">🌿</span>
+                    브랜치 만들기 (보통 develop)
+                </div>
+                <div class="step-content">
+                    <div class="what-is">
+                        <strong>📝 뭐하는 단계인가요?</strong><br>
+                        안전하게 작업할 수 있는 새로운 작업 공간을 만드는 거예요!<br>
+                        develop은 개발용 브랜치라는 뜻이에요.
+                    </div>
+                    
+                    <strong>🔧 하는 방법:</strong><br>
+                    터미널에 다음 명령어 입력:<br>
+                    
+                    <div class="command">
+git checkout -b develop
+                    </div>
+                    
+                    <div class="tip">
+                        💡 <strong>왜 develop 브랜치를 만드나요?</strong><br>
+                        • main: 완성된 코드만 보관<br>
+                        • develop: 개발하면서 실험하는 공간<br>
+                        이렇게 나누면 안전해요!
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow">⬇️</div>
+            
+            <div class="step">
+                <div class="step-number">6</div>
+                <div class="step-title">
+                    <span class="emoji">⚒️</span>
+                    작업하고 커밋하기
+                </div>
+                <div class="step-content">
+                    <div class="what-is">
+                        <strong>📝 뭐하는 단계인가요?</strong><br>
+                        실제 코딩을 하고, 작업한 내용을 저장하는 거예요!
+                    </div>
+                    
+                    <strong>🔧 하는 방법:</strong><br>
+                    1. 코드 작성 (파일 수정/추가)<br>
+                    2. 터미널에서 커밋하기:<br>
+                    
+                    <div class="command">
+git add .<br>
+git commit -m "작업 내용을 간단히 설명"
+                    </div>
+                    
+                    <div class="tip">
+                        💡 <strong>커밋 메시지 예시:</strong><br>
+                        • "로그인 기능 추가"<br>
+                        • "버그 수정: 회원가입 오류"<br>
+                        • "메인 페이지 디자인 변경"<br>
+                        <strong>→ 무엇을 했는지 한눈에 알 수 있게 써주세요!</strong>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow">⬇️</div>
+            
+            <div class="step">
+                <div class="step-number">7</div>
+                <div class="step-title">
+                    <span class="emoji">🔄</span>
+                    동기화하기 (싱크/푸시)
+                </div>
+                <div class="step-content">
+                    <div class="what-is">
+                        <strong>📝 뭐하는 단계인가요?</strong><br>
+                        내 컴퓨터의 작업 내용을 깃허브에 업로드하는 거예요!
+                    </div>
+                    
+                    <strong>🔧 하는 방법:</strong><br>
+                    터미널에서:<br>
+                    
+                    <div class="command">
+git push origin develop
+                    </div>
+                    
+                    <div class="tip">
+                        💡 <strong>push가 뭔가요?</strong><br>
+                        내 컴퓨터 → 깃허브로 파일을 업로드하는 것!<br>
+                        이제 인터넷에서 내 작업을 볼 수 있어요.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow">⬇️</div>
+            
+            <div class="step">
+                <div class="step-number">8</div>
+                <div class="step-title">
+                    <span class="emoji">🔀</span>
+                    깃허브에서 풀 리퀘스트 & 머지하기
+                </div>
+                <div class="step-content">
+                    <div class="what-is">
+                        <strong>📝 뭐하는 단계인가요?</strong><br>
+                        develop 브랜치의 작업을 main 브랜치로 합치는 거예요!<br>
+                        "개발 완료했으니 메인에 추가해주세요!"라고 요청하는 것!
+                    </div>
+                    
+                    <strong>🔧 하는 방법:</strong><br>
+                    1. GitHub.com의 내 리포지토리로 이동<br>
+                    2. "Compare & pull request" 버튼 클릭<br>
+                    3. 제목과 설명 작성<br>
+                    4. "Create pull request" 클릭<br>
+                    5. "Merge pull request" → "Confirm merge" 클릭<br>
+                    
+                    <div class="important">
+                        🎉 축하해요! 작업이 성공적으로 메인 브랜치에 합쳐졌어요!
+                    </div>
+                </div>
+            </div>
+            
+            <div class="summary">
+                <h2>🎯 전체 과정 요약</h2>
+                <p style="font-size: 1.2em; line-height: 1.8;">
+                    <strong>깃허브 리포지토리 생성</strong> → <strong>로컬 폴더 생성</strong> → 
+                    <strong>VS Code로 열기</strong> → <strong>깃 연결</strong> → 
+                    <strong>develop 브랜치 생성</strong> → <strong>작업 & 커밋</strong> → 
+                    <strong>푸시(동기화)</strong> → <strong>풀 리퀘스트 & 머지</strong>
+                </p>
+                <br>
+                <p style="font-size: 1.1em;">
+                    이 과정을 반복하면서 프로젝트를 안전하고 체계적으로 개발할 수 있어요! 🚀
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 단계별로 나타나는 애니메이션
+        window.addEventListener('load', function() {
+            const steps = document.querySelectorAll('.step');
+            steps.forEach((step, index) => {
+                step.style.opacity = '0';
+                step.style.transform = 'translateX(-50px)';
+                
+                setTimeout(() => {
+                    step.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    step.style.opacity = '1';
+                    step.style.transform = 'translateX(0)';
+                }, index * 200);
+            });
+        });
+        
+        // 스크롤 시 단계 하이라이트
+        window.addEventListener('scroll', function() {
+            const steps = document.querySelectorAll('.step');
+            const scrollTop = window.scrollY;
+            
+            steps.forEach(step => {
+                const rect = step.getBoundingClientRect();
+                if (rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2) {
+                    step.style.transform = 'translateX(10px) scale(1.02)';
+                    step.style.boxShadow = '0 10px 30px rgba(231, 76, 60, 0.3)';
+                } else {
+                    step.style.transform = 'translateX(0) scale(1)';
+                    step.style.boxShadow = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
