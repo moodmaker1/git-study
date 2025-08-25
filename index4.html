@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>깃허브 워크플로우 가이드</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+            background: linear-gradient(135deg, #ffd6e8 0%, #e8d5ff 50%, #d5f4ff 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            color: #6b5b95;
+            font-size: 2.8em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+        
+        .subtitle {
+            color: #8b7ca6;
+            font-size: 1.2em;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+        
+        .intro-box {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(107, 91, 149, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .workflow-container {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(107, 91, 149, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        
+        .step {
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 4px solid #c5a3ff;
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(197, 163, 255, 0.1);
+        }
+        
+        .step:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(197, 163, 255, 0.2);
+        }
+        
+        .step-number {
+            position: absolute;
+            left: -15px;
+            top: -15px;
+            background: linear-gradient(135deg, #c5a3ff, #b19cd9);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(197, 163, 255, 0.3);
+        }
+        
+        .step-title {
+            font-size: 1.5em;
+            color: #6b5b95;
+            margin-bottom: 15px;
+            margin-left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+        }
+        
+        .step-content {
+            color: #7a6a9a;
+            font-size: 1em;
+            line-height: 1.7;
+        }
+        
+        .what-is {
+            background: linear-gradient(135deg, #b8e6b8, #a8d5ba);
+            color: #4a6741;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 12px 0;
+            font-weight: 500;
+        }
+        
+        .terminal {
+            background: linear-gradient(135deg, #2d2d2d, #404040);
+            color: #90ee90;
+            padding: 18px;
+            border-radius: 12px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            margin: 12px 0;
+            position: relative;
+            overflow-x: auto;
+        }
+        
+        .terminal::before {
+            content: "💻 명령창";
+            position: absolute;
+            top: -10px;
+            left: 12px;
+            background: #ffb3d9;
+            color: #6b5b95;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+        
+        .code-line {
+            margin: 6px 0;
+        }
+        
+        .comment {
+            color: #b3b3b3;
+            font-style: italic;
+        }
+        
+        .tip {
+            background: linear-gradient(135deg, #ffe4cc, #ffd6b3);
+            color: #8b6f47;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 15px 0;
+            border-left: 4px solid #ffb366;
+        }
+        
+        .tip::before {
+            content: "💡 ";
+            font-size: 1.1em;
+        }
+        
+        .important {
+            background: linear-gradient(135deg, #ffd1dc, #ffb6c1);
+            color: #8b4a6b;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 15px 0;
+            font-weight: 500;
+        }
+        
+        .example-box {
+            background: linear-gradient(135deg, #e8f5e8, #d4f4d4);
+            color: #4a6741;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 15px 0;
+            border-left: 4px solid #90c695;
+        }
+        
+        .branch-diagram {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-family: monospace;
+            color: #6b5b95;
+            border: 2px solid #e8d5ff;
+        }
+        
+        .arrow {
+            text-align: center;
+            font-size: 2em;
+            color: #c5a3ff;
+            margin: 10px 0;
+        }
+        
+        .pr-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .pr-card {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(197, 163, 255, 0.1);
+            transition: transform 0.3s ease;
+            border: 1px solid #e8d5ff;
+        }
+        
+        .pr-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .summary {
+            background: linear-gradient(135deg, #c5a3ff, #b19cd9);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin-top: 30px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(197, 163, 255, 0.3);
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .summary-card {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .emoji {
+            font-size: 1.2em;
+            margin-right: 5px;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌸 깃허브 워크플로우 가이드</h1>
+            <div class="subtitle">고등학생도 쉽게 따라하는 깃 사용법</div>
+        </header>
+        
+        <div class="intro-box">
+            <h2 style="color: #6b5b95; margin-bottom: 15px; font-size: 1.4em;">📚 깃허브로 프로젝트 관리하는 법</h2>
+            <p style="color: #7a6a9a; font-size: 1em;">
+                깃허브는 코드를 저장하고 팀원들과 함께 작업할 수 있는 온라인 공간이에요. 
+                <strong>main</strong>은 완성된 안전한 코드만, 
+                <strong>develop</strong>은 개발 중인 코드들을 모아두는 곳으로 사용해요.
+            </p>
+            
+            <div class="branch-diagram">
+main    ──●────────●─────●──  (완성된 코드)<br>
+           ╲        ╱     ╱<br>
+develop     ●──●──●─────●──   (개발 중)<br>
+             ╲  ╱   ╲   ╱<br>
+feature       ●     ●──      (새 기능)
+            </div>
+        </div>
+        
+        <div class="workflow-container">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-title">
+                    <span class="emoji">🏗️</span>
+                    깃허브에 새 프로젝트 만들기
+                </div>
+                <div class="step-content">
+                    <div class="what-is">
+                        🎯 <strong>이 단계가 뭔가요?</strong> 온라인에 내 프로젝트를 담을 폴더를 만드는 거예요!
+                    </div>
+                    
+                    <strong>🔧 따라하기:</strong><br>
+                    1. GitHub.com에 로그인<br>
+                    2. 오른쪽 위 "+" 버튼 → "New repository"<br>
+                    3. 프로젝트 이름 입력: <code>my-first-project</code><br>
+                    4. ✅ "Add a README file" 체크하기 (꼭 해야 해요!)<br>
+                    5. ✅ ".gitignore" 선택 (프로그래밍 언어에 맞게)<br>
+                    6. "Create repository" 버튼 클릭<br>
+                    
+                    <div class="example-box">
+                        <strong>🌟 실제 예시:</strong><br>
+                        • 프로젝트명: <code>homework-manager</code><br>
+                        • 설명: "숙제 관리 웹사이트"<br>
+                        • .gitignore: "Node" 선택 (웹사이트를 만든다면)
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow">⬇️</div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-title">
+                    <span class="emoji">📥</span>
+                    내 컴퓨터로 프로젝트 가져오기
+                </div>
+                <div class="step-content">
+                    <div class="what-is">
+                        🎯 <strong>이 단계가 뭔가요?</strong> 온라인에 만든 프로젝트를 내 컴퓨터로 복사해오는 거예요!
+                    </div>
+                    
+                    <strong>🔧 따라하기:</strong><br>
+                    1. 작업하고 싶은 곳으로 이동 (예: 바탕화면)<br>
+                    2. 그 폴더에서 "Git Bash" 또는 "터미널" 열기<br>
+                    3. 아래 명령어 입력하기<br>
+                    
+                    <div class="terminal">
+<div class="code-line"># 깃허브에서 초록색 Code 버튼 누르고 주소 복사</div>
+<div class="code-line">git clone https://github.com/내아이디/my-first-project.git</div>
+<div class="code-line">cd my-first-project</div>
+<div class="code-line"><span class="comment"># 현재 상태 확인해보기</span></div>
+<div class="code-line">git status</div>
+                    </div>
+                    
+                    <div class="tip">
+                        <strong>꿀팁:</strong> clone하면 프로젝트명으로 폴더가 자동으로 생기고, README.md 파일도 들어있어요!
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow">⬇️</div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-title">
+                    <span class="emoji">💻</span>
+                    VS Code로 프로젝트 열기
+                </div>
+                <div class="step-content">
+                    <div class="what-is">
+                        🎯 <strong>이 단계가 뭔가요?</strong> 코딩할 수 있는 프로그램으로 프로젝트를 열어보는 거예요!
+                    </div>
+                    
+                    <strong>🔧 따라하기:</strong><br>
+                    1. VS Code 켜기<br>
+                    2. "파일" → "폴더 열기" → 복사된 프로젝트 폴더 선택<br>
+                    3. "터미널" → "새 터미널" (또는 Ctrl + `)<br>
+                    4. 깃 상태 확인해보기<br>
+                    
+                    <div class="terminal">
+<div class="code-line"># 깃 상태 확인</div>
+<div class="code-line">git status</div>
+<div class="code-line"><span class="comment"># 어떤 브랜치에 있는지 확인</span></div>
+<div class="code-line">git branch</div>
+                    </div>
+                    
+                    <div class="example-box">
+                        <strong>🌟 VS Code에서 확인할 것:</strong><br>
+                        • 왼쪽에 README.md 파일이 보여요<br>
+                        • 아래쪽 상태창에 "main" 이라고 나와요<br>
+                        • 왼쪽 깃 아이콘에서 변경사항을 볼 수 있어요
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow">⬇️</div>
+            
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-title">
+                    <span class="emoji">🌿</span>
+                    개발용 브랜치 만들기
+                </div>
+                <div class="step-content">
+                    <div class="what-is">
+                        🎯 <strong>이 단계가 뭔가요?</strong> main을 안전하게 보호하면서 작업할 수 있는 새로운 공간을 만드는 거예요!
+                    </div>
+                    
+                    <div class="terminal">
+<div class="code-line"># develop 브랜치 만들고 이동하기</div>
+<div class="code-line">git checkout -b develop</div>
+<div class="code-line"><span class="comment"># 온라인에도 develop 브랜치 만들기</span></div>
+<div class="code-line">git push -u origin develop</div>
+                    </div>
+                    
+                    <div class="important">
+                        🎯 <strong>브랜치를 왜 나누나요?</strong><br>
+                        • <strong>main:</strong> 완성되고 확인된 코드만 보관<br>
+                        • <strong>develop:</strong> 개발하면서 실험하는 공간<br>
+                        • <strong>feature:</strong> 새로운 기능 하나씩 만들 때
+                    </div>
+                    
+                    <div class="tip">
+                        <strong>확인방법:</strong> VS Code 아래쪽에 "develop"이라고 바뀐 걸 확인하세요!
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow">⬇️</div>
+            
+            <div class="step">
+                <div class="step-number">5</div>
+                <div class="step-title">
+                    <span class="emoji">⚒️</span>
+                    새 기능 브랜치에서 작업하기
+                </div>
+                <div class="step-content">
+                    <div class="what-is">
+                        🎯 <strong>이 단계가 뭔가요?</strong> 새로운 기능을 만들 때마다 별도의 작업공간을 만들어서 안전하게 개발하는 거예요!
+                    </div>
+                    
+                    <strong>🔧 새 기능 브랜치 만들기:</strong><br>
+                    
+                    <div class="terminal">
+<div class="code-line"># develop에서 최신 상태로 업데이트</div>
+<div class="code-line">git checkout develop</div>
+<div class="code-line">git pull origin develop</div>
+<div class="code-line"># 새 기능 브랜치 만들기</div>
+<div class="code-line">git checkout -b feature/login-page</div>
+                    </div>
+                    
+                    <strong>🔧 작업하고 저장하기:</strong><br>
+                    
+                    <div class="terminal">
+<div class="code-line"># 파일 수정한 후 저장하기</div>
+<div class="code-line">git add .</div>
+<div class="code-line">git commit -m "로그인 페이지 추가"</div>
+<div class="code-line"><span class="comment"># 더 작업한 후</span></div>
+<div class="code-line">git commit -m "로그인 버튼 스타일 수정"</div>
+                    </div>
+                    
+                    <div class="example-box">
+                        <strong>🌟 브랜치 이름 예시:</strong><br>
+                        • <code>feature/login-page</code> - 로그인 페이지<br>
+                        • <code>feature/shopping-cart</code> - 장바구니 기능<br>
+                        • <code>fix/login-bug</code> - 로그인 버그 수정
+                    </div>
+                    
+                    <div class="tip">
+                        <strong>커밋 메시지 쓰는 법:</strong><br>
+                        • "로그인 기능 추가" - 새 기능<br>
+                        • "버그 수정: 회원가입 오류" - 버그 고침<br>
+                        • "디자인 변경: 메인페이지 색상" - 스타일 수정
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow">⬇️</div>
+            
+            <div class="step">
+                <div class="step-number">6</div>
+                <div class="step-title">
+                    <span class="emoji">🔄</span>
+                    온라인에 작업 내용 올리기
+                </div>
+                <div class="step-content">
+                    <div class="what-is">
+                        🎯 <strong>이 단계가 뭔가요?</strong> 내 컴퓨터에서 작업한 내용을 깃허브에 업로드해서 다른 사람들도 볼 수 있게 하는 거예요!
+                    </div>
+                    
+                    <div class="terminal">
+<div class="code-line"># 처음 올릴 때</div>
+<div class="code-line">git push -u origin feature/login-page</div>
+<div class="code-line"><span class="comment"># 나중에 추가로 올릴 때는</span></div>
+<div class="code-line">git push</div>
+                    </div>
+                    
+                    <div class="important">
+                        🎯 <strong>주의사항:</strong><br>
+                        • <code>-u</code>는 처음 한 번만 써요<br>
+                        • 그 다음부터는 <code>git push</code>만 하면 됨<br>
+                        • 이제 깃허브에서 내 작업을 볼 수 있어요!
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow">⬇️</div>
+            
+            <div class="step">
+                <div class="step-number">7</div>
+                <div class="step-title">
+                    <span class="emoji">🔀</span>
+                    병합 요청하기 (Pull Request)
+                </div>
+                <div class="step-content">
+                    <div class="what-is">
+                        🎯 <strong>이 단계가 뭔가요?</strong> "제가 만든 기능을 확인해보시고 메인 프로젝트에 합쳐주세요!"라고 요청하는 거예요!
+                    </div>
+                    
+                    <div class="pr-grid">
+                        <div class="pr-card">
+                            <h4>1️⃣ PR 만들기</h4>
+                            <p>깃허브에서 "Compare & pull request"</p>
+                        </div>
+                        <div class="pr-card">
+                            <h4>2️⃣ 리뷰 요청</h4>
+                            <p>선생님이나 팀장에게 검토 요청</p>
+                        </div>
+                        <div class="pr-card">
+                            <h4>3️⃣ 피드백 받기</h4>
+                            <p>수정할 부분이 있으면 고치기</p>
+                        </div>
+                        <div class="pr-card">
+                            <h4>4️⃣ 승인 & 합치기</h4>
+                            <p>OK 받으면 develop에 합치기</p>
+                        </div>
+                    </div>
+                    
+                    <strong>🔧 PR 내용 작성 예시:</strong>
+                    <div class="example-box">
+                        <strong>제목:</strong> 로그인 페이지 추가<br><br>
+                        <strong>설명:</strong><br>
+                        ## 🎯 뭘 만들었나요?<br>
+                        - 사용자가 로그인할 수 있는 페이지<br>
+                        - 이메일과 비밀번호 입력 폼<br>
+                        - 로그인 버튼 디자인<br><br>
+                        ## ✅ 테스트<br>
+                        - 정상적으로 로그인 되는지 확인<br>
+                        - 잘못된 정보 입력시 오류 메시지 확인
+                    </div>
+                    
+                    <div class="tip">
+                        <strong>PR 설정할 때:</strong><br>
+                        • Base: <code>develop</code> ← Compare: <code>feature/login-page</code><br>
+                        • 리뷰어: 선생님이나 팀장 지정하기
+                    </div>
+                </div>
+            </div>
+            
+            <div class="arrow">⬇️</div>
+            
+            <div class="step">
+                <div class="step-number">8</div>
+                <div class="step-title">
+                    <span class="emoji">✅</span>
+                    검토 받고 합치기 완료
+                </div>
+                <div class="step-content">
+                    <div class="what-is">
+                        🎯 <strong>이 단계가 뭔가요?</strong> 선생님이나 팀장이 내 코드를 확인하고 OK해주면 develop에 합치는 거예요!
+                    </div>
+                    
+                    <strong>🔧 검토 과정:</strong><br>
+                    1. 리뷰어가 코드 확인<br>
+                    2. 수정이 필요하면 의견 남김<br>
+                    3. 수정사항 반영 후 다시 확인<br>
+                    4. 승인받으면 "Merge pull request" 클릭<br>
+                    
+                    <div class="terminal">
+<div class="code-line"># 합치기 완료 후 정리하기</div>
+<div class="code-line">git checkout develop</div>
+<div class="code-line">git pull origin develop</div>
+<div class="code-line"><span class="comment"># 완료된 기능 브랜치 삭제</span></div>
+<div class="code-line">git branch -d feature/login-page</div>
+                    </div>
+                    
+                    <div class="important">
+                        🎉 <strong>축하합니다!</strong><br>
+                        • 내가 만든 기능이 프로젝트에 추가됐어요<br>
+                        • develop 브랜치에서 최신 코드 받아오기<br>
+                        • 이제 다음 기능을 만들 준비 완료!
+                    </div>
+                </div>
+            </div>
+            
+            <div style="background: linear-gradient(135deg, #e8d5ff, #ffd6e8); padding: 20px; border-radius: 15px; margin: 25px 0;">
+                <h3 style="text-align: center; margin-bottom: 15px; color: #6b5b95;">🔄 전체 흐름 한눈에 보기</h3>
+                <div style="font-family: monospace; font-size: 0.9em; background: white; padding: 15px; border-radius: 8px; color: #6b5b95;">
+main      ●─────────────●─────────────●   (완성품)<br>
+          │             ╱             ╱<br>
+develop   ●───●───●───●─────●───●───●     (개발중)<br>
+              │   ╱         │   ╱<br>
+feature/A     ●─●           │  ╱           (새기능)<br>
+                            ╱ ╱<br>
+feature/B                  ●●
+                </div>
+            </div>
+            
+            <div class="summary">
+                <h2 style="margin-bottom: 20px;">🎯 전체 과정 요약</h2>
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <h4>🏗️ 프로젝트 생성</h4>
+                        <p>깃허브에서 새 저장소 만들기</p>
+                    </div>
+                    <div class="summary-card">
+                        <h4>📥 복사해오기</h4>
+                        <p>내 컴퓨터로 clone</p>
+                    </div>
+                    <div class="summary-card">
+                        <h4>🌿 브랜치 만들기</h4>
+                        <p>develop → feature 순서</p>
+                    </div>
+                    <div class="summary-card">
+                        <h4>🔀 합치기</h4>
+                        <p>PR 만들고 검토 후 merge</p>
+                    </div>
+                </div>
+                <p style="font-size: 1.1em; margin-
